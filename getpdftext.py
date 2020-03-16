@@ -2,7 +2,7 @@ from pdfminer.converter import PDFPageAggregator
 from pdfminer.layout import LAParams, LTTextBoxHorizontal
 from pdfminer.pdfpage import PDFPage
 from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
-
+from translate import traduzirTexto
 
 def analisarApenasTextBoxs(caminho_pdf):
     document = open(caminho_pdf, 'rb')
@@ -29,7 +29,8 @@ def analisarApenasTextBoxs(caminho_pdf):
         for element in layout:
             # Filtrando/Printando apenas caixas com textos da página
             if isinstance(element, LTTextBoxHorizontal):
-                print(element.get_text())
+                if element.get_text() != '': # Verificando se a linha está vazia
+                    print(traduzirTexto(element.get_text()))
 
 
 analisarApenasTextBoxs('pdfTeste.pdf')
