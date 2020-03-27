@@ -59,25 +59,26 @@ def tratarLtChar(Char):
         # Formatando nome das familias para compatibilizar com pasta local
         # Padrão: Segoe UI
         if search('segoe-semibold', fonteLetra, IGNORECASE):
-            fonteLetraReformatado = "Segoe-SemiBold"
+            fonteLetraReformatado = "SegoePro-SemiBold"
         elif search('segoe-bold', fonteLetra, IGNORECASE):
-            fonteLetraReformatado = "Segoe-Bold"
+            fonteLetraReformatado = "SegoePro-Bold"
         elif search('segoe', fonteLetra, IGNORECASE):
-            fonteLetraReformatado = "Segoe"
+            fonteLetraReformatado = "SegoePro"
         elif search('ZapfDingbatsStd', fonteLetra, IGNORECASE):
             fonteLetraReformatado = "ZapfDingbatsStd"
         else:
-            fonteLetraReformatado = "Segoe"
+            fonteLetraReformatado = "SegoePro"
 
         if not fonteLetraReformatado in pdfFonts:
             pdfFonts.append(fonteLetraReformatado)
             pdfmetrics.registerFont(TTFont(fonteLetraReformatado,
                                            pastaFonts + fonteLetraReformatado + '/' + fonteLetraReformatado + '.ttf'))
 
+        fonteTamanho, _, _, _, vetorX, vetorY = Char.matrix
         if Char.upright is True:
-            return CaracterManager(Char.get_text(), fonteLetraReformatado, Char.size, None, True, Char.x0, Char.y0)
+            return CaracterManager(Char.get_text(), fonteLetraReformatado, fonteTamanho, None, True, vetorX, vetorY)
         else:
-            return CaracterManager(Char.get_text(), fonteLetraReformatado, Char.size, None, False, Char.x1, Char.y1)
+            return CaracterManager(Char.get_text(), fonteLetraReformatado, fonteTamanho, None, False, vetorX, vetorY)
     else:
         print("{ erro: true, log: 'Tipo de instância inválida para LTChar'}")
 
